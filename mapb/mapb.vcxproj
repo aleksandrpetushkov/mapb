@@ -118,6 +118,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="elem.h" />
     <ClInclude Include="mapb.h" />
   </ItemGroup>
   <ItemGroup>
