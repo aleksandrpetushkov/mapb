@@ -1,4 +1,5 @@
 #include "elem.h"
+#include <vector>
 
 template<class T1, class T2> class mapb
 {
@@ -12,26 +13,25 @@ public:
 	{
 		return _size;
 	}
-	T2 operator[](const T1 key)
+	T2& operator[](const T1 key)
 	{
 
-		T2 result;
-		if(_size=0)
+		if(_size==0)
 		{
-			up.set(key);
+			up = new elem<T1, T2>(key);
 			++_size;
-			return up.get_val();
+			return up->get_val();
 		}
 		else
 		{
 			return get_set(key);
 		}
 	}
-
-	T2 get_set(const T1 key)
+	
+	T2& get_set(const T1 &key) //Возврат ссылки на значение по ключу.
 	{
-		elem<T1,T2>* cor;
-		cor = &up;
+		elem<T1,T2>* cor; 
+		cor = up;
 		while(true)
 		{
 			if(cor->get_key()<key)
@@ -42,7 +42,10 @@ public:
 				}
 				else
 				{
-					cor->set_right((new elem<T1, T2>(key)));
+					
+					cor->set_right(key);
+					++_size;
+					return cor->get_right()->get_val();
 				}
 			}
 			else if(cor->get_key()>key)
@@ -53,7 +56,8 @@ public:
 				}
 				else
 				{
-					cor->set_left(new elem<T1, T2>(key));
+					cor->set_left(key);
+					++_size;
 					return cor->get_left()->get_val();
 				}
 			}
@@ -61,19 +65,52 @@ public:
 			{
 				return cor->get_val();
 			}
-
 		}
 	}
 	void clear()
 	{
-
+		std::vector<elem<T1, T2>*> vec;
+		elem<T1, T2>* cor, *cor_t;
+		cor = up;
+		
+//k		while (cor->get_left() != nullptr || vec.empty() || cor->get_right() != nullptr)
+		while(cor!=nullptr)
+		{
+			if(cor->get_left()!=nullptr)
+			{
+				if(cor->get_right()!=nullptr)
+				{
+					vec.push_back(cor->get_right());
+				}
+				cor_t = cor->get_left();
+				delete cor;
+				cor = cor_t;
+			}
+			else if(cor->get_right()!=nullptr)
+			{
+				cor_t = cor->get_right();
+				delete cor;
+				cor = cor_t;
+			}
+			else if(!vec.empty())
+			{
+				delete cor;
+				cor = vec.back();
+				vec.pop_back();
+			}
+			else
+			{
+				delete cor;
+				cor = nullptr;
+			}
+		}
+		_size = 0;
 	}
-	void operator=(const int &_val)
+	T2 find(T1 const &key)
 	{
-
+		
 	}
-
 protected:
-	unsigned int _size = 0;
-	elem<T1, T2> up;
+	unsigned int _size = 0; // Размер mapb
+	elem<T1, T2> *up;
 };
