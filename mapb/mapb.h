@@ -106,9 +106,39 @@ public:
 		}
 		_size = 0;
 	}
-	T2 find(T1 const &key)
+	bool find(T1 const &key)
 	{
-		
+		elem<T1, T2>* cor;
+		cor = up;
+		while (true)
+		{
+			if (cor->get_key()<key)
+			{
+				if (cor->get_right() != nullptr)
+				{
+					cor = cor->get_right();
+				}
+				else
+				{
+					return false;
+				}
+			}
+			else if (cor->get_key()>key)
+			{
+				if (cor->get_left() != nullptr)
+				{
+					cor = cor->get_left();
+				}
+				else
+				{
+					return false;
+				}
+			}
+			else if (cor->get_key() == key)
+			{
+				return true;
+			}
+		}
 	}
 protected:
 	unsigned int _size = 0; // Размер mapb

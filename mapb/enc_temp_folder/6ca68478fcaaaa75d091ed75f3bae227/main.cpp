@@ -28,7 +28,14 @@ unsigned int main()
 	mpb[1] = 2;
 	mpb[10] = 20;
 	cout << endl << mpb[0] << endl << mpb.size() << endl << mpb[3];
-	
+	if(mpb.find(10))
+	{
+		cout << "Exist\n";
+	}
+	else
+	{
+		cout << "Not exist\n";
+	}
 	mpb.clear();
 
 
