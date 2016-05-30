@@ -106,8 +106,12 @@ public:
 		}
 		_size = 0;
 	}
-	bool find(T1 const &key)
+	bool find(T1 const &key) //Провкрка на существование элемента
 	{
+		if(up==nullptr)
+		{
+			return false;
+		}
 		elem<T1, T2>* cor;
 		cor = up;
 		while (true)

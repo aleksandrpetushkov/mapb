@@ -8,11 +8,12 @@ public:
 	{
 		
 	}
+	//*/
+
 	elem(T1 const &key)
 	{
 		_key = key;
 	}
-	//*/
 	void set(T1 const &key, T2 const &val)
 	{
 		_key = key;
@@ -34,7 +35,10 @@ public:
 	{
 		return right;
 	}
-
+	void set_val(T1 const & val)
+	{
+		_val = val;
+	}
 	void set_right(T2 const &key)
 	{
 		if(right!=nullptr)
